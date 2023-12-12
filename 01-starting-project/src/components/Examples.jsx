@@ -3,14 +3,16 @@ import TabButton from './TabButton';
 import {EXAMPLES} from '../data.js';
 import Section from './Section.jsx';
 import Tabs from './Tabs.jsx';
+import "../index.css";
 
 export default function Examples(){
-    const [selectedTopic, setSelectedTopic] = useState();
+    const [selectedTopic, setSelectedTopic] = useState('components');
 
+    
     let tabContent = <p>Please select a topic</p>;
     if (selectedTopic){
       tabContent = 
-      <div id='tab-content'>
+      <div key={selectedTopic} id='tab-content' className="fade-in">
         <h3>{EXAMPLES[selectedTopic].title}</h3>
         <p>{EXAMPLES[selectedTopic].description}</p>
         <pre>
@@ -20,6 +22,7 @@ export default function Examples(){
         </pre>
       </div>
     }
+  
 
     function handleSelect(selectedButton) {
         //string for the button (Components, JSX, Props, State)
