@@ -16,13 +16,9 @@ export default function Header() {
     let currentIndex = 0;
 
     const interval = setInterval(() => {
-      setCurrentDescription(reactDescriptions[currentIndex]);
       currentIndex = (currentIndex + 1) % reactDescriptions.length;
-    }, 1000);
-
-    setTimeout(() => {
-      clearInterval(interval);
-    }, 5000);
+      setCurrentDescription(reactDescriptions[currentIndex]);
+    }, 3000);
 
     return () => {
       clearInterval(interval);
