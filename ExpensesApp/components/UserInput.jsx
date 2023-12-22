@@ -1,8 +1,8 @@
-export default function UserInput({title, type, id, placeHolder}){
+export default function UserInput({title, type, id, placeHolder, onChange}){
   return (
     <div>
         <label htmlFor={id}>{title}</label>
-        <input type={type} id={id} placeholder={placeHolder}></input>
+        <input onChange={onChange} type={type} id={id} placeholder={placeHolder}></input>
     </div>
   )  
 }

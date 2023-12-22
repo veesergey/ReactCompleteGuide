@@ -1,47 +1,41 @@
 import { useState } from 'react'
 import Header from "../components/Header"
 import UserInput from '../components/UserInput'
+import ResultTable from '../components/ResultTable';
+import { calculateInvestmentResults } from './util/investment';
+
+const intialInvestmentObj = {
+  initialInvestment: 10000,
+  annualInvestment: 300,
+  expectedReturn: 5.5,
+  duration: 12
+}
+let tableData = [];
 
 function App() {
-  const tableData = [
-    { year: 1, investmentValue: 1000, interestYear: 100, totalInterest: 100, investedCapital: 1000 },
-    { year: 2, investmentValue: 2000, interestYear: 200, totalInterest: 300, investedCapital: 3000 },
-    { year: 3, investmentValue: 3000, interestYear: 300, totalInterest: 600, investedCapital: 6000 },
-    // Add more data as needed
-  ];
+  const [investmentObj, setInvestmentObj] = useState(intialInvestmentObj);
+  tableData = calculateInvestmentResults(investmentObj);
+  
+  function changeHandler(event){
+    setInvestmentObj((prevObj) => {
+      return {...prevObj, [event.target.id]: Number(event.target.value)};
+    })
+    
+    
+  }
+
+  console.log(investmentObj);
+  console.log(tableData);
   return (
     <div>
       <Header title='Investment Calculator'/>
       <div id="user-input" className='input-group'>        
-        <UserInput type='number' id='initial-investment' title='Initial Investment ($)' placeHolder='5000'/>
-        <UserInput type='number' id='annual-investment' title='Annual Investment ($)' placeHolder='1000'/>
-        <UserInput type='number' id='expected-return' title='Expected Return (%)' placeHolder='6'/>
-        <UserInput type='number' id='duration' title='Duration (Months)' placeHolder='12'/> 
+        <UserInput onChange={changeHandler} type='number' id='initialInvestment' title='Initial Investment ($)' placeHolder={intialInvestmentObj.initialInvestment}/>
+        <UserInput onChange={changeHandler} type='number' id='annualInvestment' title='Annual Investment ($)' placeHolder={intialInvestmentObj.annualInvestment}/>
+        <UserInput onChange={changeHandler} type='number' id='expectedReturn' title='Expected Return (%)' placeHolder={intialInvestmentObj.expectedReturn}/>
+        <UserInput onChange={changeHandler} type='number' id='duration' title='Duration (Years)' placeHolder={intialInvestmentObj.duration}/> 
       </div>      
-      <div id="result">
-        <table className='table'>
-          <thead>
-            <tr>
-              <th>Year</th>
-              <th>Investment Value</th>
-              <th>Interest (Year)</th>
-              <th>Total Interest</th>
-              <th>Invested Capital</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tableData.map((data) => (
-              <tr key={data.year}>
-                <td>{data.year}</td>
-                <td>{data.investmentValue}</td>
-                <td>{data.interestYear}</td>
-                <td>{data.totalInterest}</td>
-                <td>{data.investedCapital}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <ResultTable tableData={tableData}/>
     </div>      
   )
 }
