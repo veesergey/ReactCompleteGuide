@@ -44,6 +44,20 @@ export default function Book() {
         setProjects([...projects]);
     }
 
+    function DeleteTask(index, task){
+        console.log("DeleteTask("+index+","+task+")");
+        projects[index].tasks = projects[index].tasks.filter((t) => t !== task);
+        setProjects([...projects]);
+    }
+
+    function DeleteProject(title){
+        console.log("DeleteProject("+title+")");
+        let tempProjects = projects.filter((p) => p.ProjectTitle !== title);
+        setProjects([...tempProjects]);
+        Home();
+        console.log(projects);
+    }
+
     return (
         <div className="flex">
         <Sidebar projectList={projects} Home={Home} CreateNewProject={CreateNewProject} GoToProject={ViewProject}/>
@@ -51,7 +65,7 @@ export default function Book() {
            {
                 (page === "ProjectCreation" && <ProjectCreation ref={projRef} cancelClick={Home} OnSave={OnSave}/>) 
                 ||
-                (page === "ProjectView" && <ProjectView projectObj={view} AddTask={AddTask}/>)
+                (page === "ProjectView" && <ProjectView projectObj={view} AddTask={AddTask} DeleteTask={DeleteTask} DeleteProject={DeleteProject}/>)
                 ||
                 (page === "" &&
                 //Return create new project page (Home Page)
