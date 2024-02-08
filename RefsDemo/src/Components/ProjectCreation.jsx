@@ -1,20 +1,23 @@
 import {useRef, forwardRef} from 'react';
 
-const ProjectCreation = forwardRef(function ProjectCreation({cancelClick, onSave}, ref){
+const ProjectCreation = forwardRef(function ProjectCreation({cancelClick, OnSave}, ref){
 
-function SaveProject(){
+function OnSaveHandler(){
+    console.log("OnSaveHandler()");
     ref.current = {
         ProjectTitle: document.getElementById("Title").value,
         ProjectDesc: document.getElementById("Desc").value,
-        ProjectDueDate: document.getElementById("DueDate").value
+        ProjectDueDate: document.getElementById("DueDate").value,
+        tasks: [],
+        Something: "Else"
     }
-    onSave();
+    OnSave();
 }
     return (
         <div>
            <div className="flex justify-end">
                 <button className="py-3 px-8 font-medium" onClick={cancelClick}>Cancel</button>
-                <button className="py-3 px-8 font-medium bg-gray-800 rounded-lg text-white" onClick={SaveProject}>Save</button>
+                <button className="py-3 px-8 font-medium bg-gray-800 rounded-lg text-white" onClick={OnSaveHandler}>Save</button>
             </div>
             <div>
                 <label className="block text-sm font-medium text-gray-700">Title</label>

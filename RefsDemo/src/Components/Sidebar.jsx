@@ -1,5 +1,5 @@
 export default function Sidebar({projectList, Home, CreateNewProject, GoToProject}) {
-       
+            
     function ViewProject(event, index){
         GoToProject(index);
     }

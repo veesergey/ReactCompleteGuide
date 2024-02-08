@@ -5,9 +5,12 @@ import ProjectView from './ProjectView';
 export default function Book() {
     
     const [page, setPage] = useState("");
-    const [projects, setProjects] = useState([{ProjectTitle: "React", ProjectDesc: "Learn React", ProjectDueDate: "2021-10-10"}, {ProjectTitle: "Vue", ProjectDesc: "Learn Vue", ProjectDueDate: "2021-10-10"}]); 
+    const [projects, setProjects] = useState([{key: 0, ProjectTitle: "React", ProjectDesc: "Learn React", ProjectDueDate: "2021-10-10", tasks: ["Take Course", "Launch Website"]}, 
+                                              {key: 1, ProjectTitle: "Vue", ProjectDesc: "Learn Vue", ProjectDueDate: "2021-10-10", tasks: ["Take Course", "Launch Website"]},
+                                              {key: 2, ProjectTitle: "Game Design", ProjectDesc: "Learn to make IdleGame", ProjectDueDate: "2024-10-10", tasks: ["Take Courses", "Launch Game"]}]); 
+    const [view, setView] = useState("");
     const projRef = useRef();
-    const viewRef = useRef();
+ 
 
     function CreateNewProject() {
         setPage("ProjectCreation");
@@ -24,19 +27,21 @@ export default function Book() {
         setPage(page);
     }
 
-    function onSaveProject(){
+    function OnSave(){
+        projRef.current.key = projects.length;
         setProjects([...projects, projRef.current]);
         flipPage("");          
     }
 
-    function ViewProject(index){     
-        console.log(projects[index]);
-        flipPage("");      
-        viewRef.current = projects[index];
-        console.log(viewRef.current);
+    function ViewProject(index){                 
+        setView(projects[index]);       
         flipPage("ProjectView");
-        
-        
+               
+    }
+    
+    function AddTask(index, task){        
+        projects[index].tasks.push(task);
+        setProjects([...projects]);
     }
 
     return (
@@ -44,9 +49,9 @@ export default function Book() {
         <Sidebar projectList={projects} Home={Home} CreateNewProject={CreateNewProject} GoToProject={ViewProject}/>
         <div className=" text-black p-4 relative left-40 top-32 w-1/2">
            {
-                (page === "ProjectCreation" && <ProjectCreation ref={projRef} cancelClick={Home} onSave={onSaveProject}/>) 
+                (page === "ProjectCreation" && <ProjectCreation ref={projRef} cancelClick={Home} OnSave={OnSave}/>) 
                 ||
-                (page === "ProjectView" && <ProjectView title={viewRef.current.ProjectTitle}/>)
+                (page === "ProjectView" && <ProjectView projectObj={view} AddTask={AddTask}/>)
                 ||
                 (page === "" &&
                 //Return create new project page (Home Page)
