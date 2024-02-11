@@ -5,7 +5,7 @@ export default function Sidebar({projectList, Home, CreateNewProject, GoToProjec
     }
 
     return (                     
-        <div className="min-w-20 w-1/5 bg-black text-white p-4 border rounded-r-xl z-0 h-screen relative">
+        <aside className="w-1/5 md:w-72 bg-black text-white p-4 border rounded-r-xl h-screen">
             <div>
                 <h1 className="uppercase text-lg ml-5 my-5">Your Projects</h1>
                 <button className="ml-5 bg-gray-800 text-white rounded-lg px-4 py-2" onClick={CreateNewProject}>+ Add Project</button>
@@ -17,7 +17,7 @@ export default function Sidebar({projectList, Home, CreateNewProject, GoToProjec
                     })}
                 </ul>
                 </div>
-        </div>
+        </aside>
     )
 }
 
